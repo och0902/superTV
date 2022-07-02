@@ -20,5 +20,4 @@ commentsSchema.virtual('childComments')
    .get(function() { return this._childComments; })
    .set(function(value) { this._childComments = value; });
 
-
 module.exports =  mongoose.model('comments', commentsSchema);

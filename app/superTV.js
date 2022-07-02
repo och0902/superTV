@@ -41,4 +41,8 @@ const router = require('./src/routes/router.js');
 
 app.use('/', router);
 
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function() {
+   console.log(`Server is running at http://localhost:${PORT} ...`);
+});

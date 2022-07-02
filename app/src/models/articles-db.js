@@ -20,5 +20,4 @@ articlesSchema.plugin(autoIncrement.plugin,{
    increment: 1 
 });
 
-
 module.exports = mongoose.model('articles', articlesSchema);

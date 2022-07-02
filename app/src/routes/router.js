@@ -52,8 +52,7 @@ router.delete('/article/delete/:id', auth.loggedIn, articleCtrl.process.deleteAr
 
 // comment page
 router.post('/comment/create/:id', auth.loggedIn, articleCtrl.identify.checkArticleId, commentCtrl.process.createComment);
-// router.get('/comment/modify/:id', articleCtrl.process.modifyComment);
-router.put('/comment/update/:id', auth.loggedIn, commentCtrl.process.updateComment);
+router.put('/comment/update/:id', auth.loggedIn, articleCtrl.identify.checkArticleId, commentCtrl.process.updateComment);
 router.delete('/comment/delete/:id', auth.loggedIn, articleCtrl.identify.checkArticleId, commentCtrl.process.deleteComment);
 
 module.exports = router;

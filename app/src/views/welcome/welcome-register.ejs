@@ -5,8 +5,6 @@
 
    <%- include('./partials/welcome-header-part.ejs'); %>
 
-   <script src="/js/welcome-register.js" defer></script>
-
 </head>
 
 <body>
@@ -16,10 +14,10 @@
       <div class="hero">
          <div id="register-container">
             <p>구성원 등록을 위하여 회사의 이메일 아이디, 이름과 사번을 입력하여 주세요</p>
-            <form class="input-form" action="" method="">
+            <form class="input-form" action="/register" method="POST">
                <div class="input-area">
-                  <div class="input-box"><input type="text" id="id" name="id" placeholder="아이디"></div>
                   <div class="input-box"><input type="text" id="name" name="name" placeholder="이 름"></div>
+                  <div class="input-box"><input type="text" id="id" name="id" placeholder="아이디"></div>
                   <div class="input-box"><input type="password" id="psword" name="psword"  placeholder="사 번"></div>
                   <!-- <div class="input-box"><input type="password" id="confirmPsword" name="confirmPsword"  placeholder="사번 확인"></div> -->
                </div>

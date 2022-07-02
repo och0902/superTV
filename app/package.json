@@ -7,13 +7,14 @@
     "code": "superTV.js"
   },
   "scripts": {
-    "start": "nodemon ./bin/superTV",
+    "start": "nodemon superTV",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "dotenv": "^14.3.2",
     "ejs": "^3.0.2",
