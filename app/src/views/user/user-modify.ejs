@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+   <%- include('./partials/user-header-part.ejs'); %>
+   
+</head>
+
+<body>
+
+   <%- include('./partials/user-topper-part.ejs'); %>
+
+         <tr class="FORM">
+            <form action="/user/update/<%= user._id %>?_method=put" method="POST">
+               <td class="NAME"><input type="text" id="name" name="name" value="<%= user.name %>"></td>
+               <td class="ID"><input type="text" id="id" name="id" value="<%= user.id %>"></td>
+               <td class="PW"><input type="text" id="psword" name="psword" value="<%= user.psword %>"></td>
+               <td class="ADMIN"><input type="text" id="admin" name="admin" value="<%= user.admin %>"></td>
+               <td class="CRUD"><input type="submit" id="submit" value="수정"></input></td>
+            </form>
+         </tr>
+      </table>
+   </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+body { box-sizing: border-box; }
+
+.main-container {
+   width: 96%;
+   height: 100vh;
+   margin: auto;
+}
+
+.title-container {
+   margin: 5vh 0;
+   padding: 0 5%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.title-container a {
+   text-decoration: none;
+   color: #000;
+   cursor: pointer;
+}
+
+.title-container a:hover {
+   text-decoration: underline;
+   font-weight: 900;
+} 
+
+table {
+   width: 100%;
+   border-spacing: 0;
+   border-collapse: collapse;
+   text-align: center;
+}
+
+th, td {
+   height: 40px;
+}
+
+th {
+   background-color: #aaa;
+   color: #fff;
+}
+
+th:nth-child(1) { width: 20% }
+th:nth-child(2) { width: 20% }
+th:nth-child(3) { width: 20% }
+th:nth-child(4) { width: 20% }
+th:nth-child(5) { width: 20% }
+
+td input {
+   width: 90%;
+   height: 70%;
+   font-size: 16px;
+   text-align: center;
+   border: 1px solid #ddd;
+}
+
+.FORM {
+   height: 50px;
+}
+
+#submit {
+   border: none;
+   background-color: #fff;
+   cursor: pointer;
+}
+
+#submit:hover,
+.CRUD a:hover {
+   text-decoration-line: underline;
+   font-weight: 900;
+}
+
+.CRUD a {
+   text-decoration: none;
+   color: #000;
+   cursor: pointer;
+}
+
+.CRUD form {
+   display: inline-block;
+}
+
+td {
+   border-top: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 1000px) {
+   .ADMIN,
+   .CRUD { 
+      display: none;
+   }         
+}

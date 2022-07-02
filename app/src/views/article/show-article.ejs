@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <%- include('../partials/main-head-part.ejs'); %>
+   <link rel="stylesheet" href="/css/article-style.css">
+</head>
+
+<body>
+   <%- include('../partials/main-body-part.ejs'); %>
+   
+   <!-- <div class="spacer"></div> -->
+
+   <div class="main-container">
+      <div class="article-header">
+         <div class="article-title">
+            <h2>PLAY - 구성원 게시판</h2>
+            <p>다양한 여러의견들이 제안되고 논의되는 자유롭고 건강한 공간</p>
+         </div>
+         <div class="article-nav">
+            <div class="nav-btn">
+               <a href="/articles">목록</a>
+            </div>
+            <div class="nav-btn" >
+               <a href="/article/modify/<%= article._id %>">수정</a>
+            </div>
+            <div class="nav-btn" >
+               <form action="/article/delete/<%= article._id %>?_method=delete" method="POST">
+                  <a onclick="confirm('이 글을 삭제할까요 ?') ? this.parentElement.submit() : null;">삭제</a>
+               </form>
+               <!-- <a onclick="confirm('이 글을 삭제할까요 ?') ? location.href='/article/delete/<%= article._id %>' : null;">삭제</a> -->
+            </div>
+         </div>
+      </div>
+
+      <div class="article-show-container">
+         <div class="article-show-title">
+            <span><%= article.title %></span>
+         </div>
+         <div class="article-show-etc">
+            <span class="article-num">번호 : <%= article.num %></span>
+            <span class="article-writer">작성자 : <%= article.writer.id %></span>
+            <span class="article-createdAt">등록 : <%= article.createdAt.toLocaleString() %></span>
+            <% if(article.updatedAt) { %> 
+               <span class="article-updatedAt">수정 : <%= article.updatedAt.toLocaleString() %></span>
+            <% } %>
+            <span class="article-views">조회수 : <%= article.views %></span>
+            <span class="article-goods">좋아요 : <%= article.views %></span>
+            <span class="article-bads">싫어요 : <%= article.views %></span>
+         </div>
+         <div class="article-show-content"><%= article.content %></div>
+      </div>
+      
+      <div class="comments-container">         
+         <div class="comments-header">
+            <h3 class="comments-title">댓 글</h3>
+            <div class="comment-nav">
+               <a onclick="$('.comment-form-container').css({ display: 'flex' });">댓글 작성</a>
+            </div>
+         </div>
+
+         <form class="comment-form-container" action="/comment/create/<%= article._id %>?articleId=<%= article._id%>" method="POST">
+            <textarea name="commentContent" id="commentContent" cols="" rows="5" placeholder="의견을 댓글로 남겨 주세요 ~"></textarea>
+            <a onclick="confirm('이 글을 저장할까요 ?') ? this.parentElement.submit() : null;">등록</a>
+            <a onclick="$('.comment-form-container').css({ display: 'none', width: '95%' });">취소</a>
+         </form>
+
+
+         <% if(commentTrees.length) { %>
+
+            <div class="show-comments-container">
+
+               <% commentTrees.forEach( function(comment) { %> 
+
+                  <%- include('./show-comment-part.ejs', { article: article, comment: comment, treeLevel: 0 }) %>
+
+               <% }); %>
+
+            </div>
+
+         <% }; %>   
+
+      </div>
+
+   </div>
+</body>
+</html>

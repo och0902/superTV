@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <%- include('../partials/main-head-part.ejs'); %>
+   <link rel="stylesheet" href="/css/article-style.css">
+</head>
+
+<body>
+   <%- include('../partials/main-body-part.ejs'); %>
+   
+   <!-- <div class="spacer"></div> -->
+
+   <div class="main-container">
+      <div class="article-header">
+         <div class="article-title">
+            <h2>PLAY - 구성원 게시판</h2>
+            <p>다양한 여러의견들이 제안되고 논의되는 자유롭고 건강한 공간</p>
+         </div>
+         <div class="article-nav">
+            <div class="nav-btn">
+               <a href="/article/new">새글 작성</a>
+            </div>
+         </div>
+      </div>
+      <table>
+         <thead>
+            <tr>
+               <th class="table-num">번호</th>
+               <th class="table-catagory">카테고리</th>
+               <th class="table-title">제 목</th>
+               <th class="table-writer">작성자</th>
+               <th class="table-acreatedAt">등록일</th>
+               <th class="table-commnents">댓글수</th>
+               <th class="table-views">조회수</th>
+            </tr>
+         </thead>
+         <tbody>
+            <% if(articles == null || articles.length == 0){ %>
+               <tr>
+                  <td colspan=5> There is no data to show :( </td>
+               </tr>
+            <% } %>
+            <% articles.forEach(function(article) { %>
+               <tr>
+                  <td class="table-num">
+                     <a href="/article/show/<%= article._id %>">
+                        <div>
+                           <span><%= article.num %></span>
+                        </div>
+                     </a>
+                  </td>
+                  <td class="table-catagory"><%= article.catagory %></td>
+                  <td class="table-title">
+                     <a href="/article/show/<%= article._id %>">
+                        <div>
+                           <span><%= article.title %></span>
+                        </div>
+                     </a>
+                  </td>
+                  <td class="table-writer"><%= article.writer.id %></td>                     
+                  <td class="table-acreatedAt"><%= article.createdAt.toLocaleDateString(); %></td>    
+                  <td class="table-commnents"><%= article.comments %></td>
+                  <td class="table-views"><%= article.views %></td>
+               </tr>
+            <% }) %>
+         </tbody>
+      </table>
+   </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+   <%- include('./partials/user-header-part.ejs'); %>
+
+</head>
+
+<body>
+
+   <%- include('./partials/user-topper-part.ejs'); %>
+
+         <tr class="FORM">
+            <form action="/user/create" method="POST">
+               <td class="NAME"><input type="text" id="name" name="name" value=""></td>
+               <td class="ID"><input type="text" id="id" name="id" value=""></td>
+               <td class="PW"><input type="text" id="psword" name="psword" value=""></td>
+               <td class="ADMIN"><input type="text" id="admin" name="admin" value=""></td>
+               <td class="CRUD"><input type="submit" id="submit" value="신규등록"></input></td>
+            </form>
+         </tr>
+         <% users.forEach(function(eachUser) { %>
+            <tr>
+               <td class="NAME"> <%= eachUser.name %> </td>
+               <td class="ID"> <%= eachUser.id %> </td>
+               <td class="PW"> <%= eachUser.psword %> </td>
+               <td class="ADMIN"> <%= eachUser.admin %> </td>
+               <td class="CRUD">
+                  <a href="/user/modify/<%= eachUser._id %>">수정</a> /
+                  <form action="/user/delete/<%= eachUser._id %>?_method=delete" method="POST">
+                     <a onclick="confirm('이 사용자 정보를 삭제할까요 ?') ? this.parentElement.submit() : null; ">삭제</a>
+                  </form>
+                  <!-- <a onclick="if(confirm('이 사용자 정보를 삭제할까요 ?')){location.href='/user/delete/<%= eachUser._id %>';}">삭제</a> -->
+               </td>
+            </tr>
+         <% }) %>
+      </table>
+   </div>
+</body>
+</html>

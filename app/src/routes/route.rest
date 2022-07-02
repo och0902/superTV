@@ -1,0 +1,13 @@
+Get http://localhost:4200/
+
+###
+Get http://localhost:4200/admin
+
+###
+POST http://localhost:4200
+Content-Type: : application/json
+
+{
+   "id": "och",
+   "psword": "200248"
+} 

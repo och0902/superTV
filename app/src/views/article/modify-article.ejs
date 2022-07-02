@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+   <%- include('../partials/main-head-part.ejs'); %>
+   <link rel="stylesheet" href="/css/article-style.css">
+</head>
+
+<body>
+   <%- include('../partials/main-body-part.ejs'); %>
+   
+   <!-- <div class="spacer"></div> -->
+
+   <div class="main-container">
+      <form class="article-container" action="/article/update/<%= article._id %>?_method=put" method="POST">
+         <div class="article-header">
+            <div class="article-logo">
+               <h2>PLAY - 구성원 게시판</h2>
+               <p>다양한 여러의견들이 제안되고 논의되는 자유롭고 건강한 공간</pclass=>
+            </div>
+            <div class="article-nav">
+               <div class="nav-btn">
+                  <a href="/article/show/<%= article._id %>">취소</a>
+               </div>
+               <div class="nav-btn" >
+                  <a onclick="confirm('이 글을 저장할까요 ?') ? this.parentElement.parentElement.parentElement.parentElement.submit() : null;">저장</a>
+               </div>
+            </div>
+         </div>
+
+         <div class="new-article-title">
+            <select type="text" id="catagory" name="catagory" value="">
+               <option value="고객가치 최우선">고객가치 최우선</option>
+               <option value="인사이트">인사이트</option>
+               <option value="민첩">민첩</option>
+               <option value="치밀철저">치밀철저</option>
+               <option value="열린협업">열린협업</option> 
+            </select>
+            <input type="text" id="title" name="title" value="<%= article.title %>">
+         </div>
+         <div class="new-article-content">
+            <textarea id="content" name="content" rows="20"><%= article.content %></textarea>
+         </div>
+      </form>
+
+   </div>
+</body>
+</html>

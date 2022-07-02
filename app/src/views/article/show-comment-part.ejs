@@ -1,0 +1,73 @@
+<!-- show-comment.ejs -->
+
+<% if(comment.isDeleted) { %> 
+   <div>댓글이 삭제되었습니다</div>   
+<% } else { %>
+
+   <div class="comment-id-container" id="comment-<%= comment._id %>"> 
+      <div class="tree-level<%= treeLevel %>"> 
+
+         <div class="comment-show-container">  
+                  
+            <div class="comment-show-content"><%= comment.commentContent %></div>
+
+            <form class="comment-edit-form-container" action="/comment/update/<%= comment._id %>?articleId=<%= article._id%>&_method=put" method="POST">
+               <textarea name="commentContent" id="commentContent" cols="" rows="2"><%= comment.commentContent %></textarea>
+               <a onclick="confirm('이 글을 저장할까요 ?') ? this.parentElement.submit() : null;">등록</a>
+            </form>
+
+            <div class="comment-show-etc-container">
+               <div class="comment-show-etc">
+                  <span class="comment-commentor">작성자 : <%= comment.writer.id %></span>
+                  <span class="comment-createdAt">등록 : <%= comment.createdAt.toLocaleString() %></span>
+                  <% if(comment.updatedAt) { %> 
+                     <span class="comment-updatedAt">수정 : <%= comment.updatedAt.toLocaleString() %></span>
+                  <% } %>
+                  <span class="comment-views">조회수 : <%= comment.views %></span>
+                  <span class="comment-goods">좋아요 : <%= comment.goods %></span>
+                  <span class="comment-bads">싫어요 : <%= comment.bads %></span>
+               </div>
+               <div class="comment-show-crud">
+                  <a onclick="
+                     $('#comment-<%= comment._id %> .tree-level<%= treeLevel %> .comment-show-content').css({ display: 'none' });
+                     $('#comment-<%= comment._id %> .tree-level<%= treeLevel %> .comment-edit-form-container').css({ display: 'flex' });
+                  ">댓글수정</a>
+                  <a onclick="
+                     $('#comment-<%= comment._id %> .tree-level<%= treeLevel %> .comment-show-content').css({ display: 'flex' });
+                     $('#comment-<%= comment._id %> .tree-level<%= treeLevel %> .comment-edit-form-container').css({ display: 'none' });
+                  ">취소</a>
+                  <form action="/comment/delete/<%= comment._id %>?articleId=<%= article._id%>&_method=delete" method="POST">
+                     <a onclick="confirm('이 글을 삭제할까요 ?') ? this.parentElement.submit() : null;">댓글삭제</a>
+                  </form>
+                  <!-- <a onclick="confirm('이 글을 삭제할까요 ?') ? location.href='/comment/delete/<%= comment._id %>?articleId=<%= article._id%>' : null;">댓글삭제</a> -->
+                  <a onclick="$('#comment-<%= comment._id %> .tree-level<%= treeLevel %> .reply-form-container').css({ display: 'flex' })">대댓글</a>
+                  <!-- <a onclick="$('#comment-<%= comment._id %>').addClass('comment-edit-enabled')">대댓글</a> -->
+               </div>
+            </div>
+
+         </div>
+
+         <form class="reply-form-container" action="/comment/create/<%= comment._id %>?articleId=<%= article._id %>" method="POST">
+            <input type="hidden" name="parentComment" value="<%= comment._id %>">
+            <textarea name="commentContent" id="commentContent" cols="" rows="2" placeholder="의견을 댓글로 남겨 주세요 ~"></textarea>
+            <a onclick="confirm('이 글을 저장할까요 ?') ? this.parentElement.submit() : null;">등록</a>
+            <a onclick="$('#comment-<%= comment._id %> .tree-level<%= treeLevel %> .reply-form-container').css({ display: 'none' });">취소</a>
+         </form>
+
+      </div>
+
+      <% if (comment.childComments) {
+
+         treeLevel++;
+         
+         comment.childComments.forEach( function(childComment) { %> 
+
+            <%- include('./show-comment-part.ejs', { article: article, comment: childComment, treeLevel: treeLevel }); %> 
+            
+         <% }); %> 
+
+      <% }; %>
+
+   </div>
+
+<% }; %>
