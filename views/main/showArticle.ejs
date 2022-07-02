@@ -1,0 +1,125 @@
+<%- include('header') -%>
+
+   <div class="container py-md-2 my-2"></div>
+
+   <div class="container p-0">
+      <div class="title">
+         <h2>TV사업 성공희망</h2>
+         <p class="subtitle">Upload Texts to the <strong>Server</strong></p>
+      </div>
+   </div>
+
+   <!-- Page content -->
+   <div class="container mt-5">
+      <header class="mb-4">
+         <h1 class="fw-bolder mb-1">
+            <!-- <%= article.id %> -->
+            <%= article.title %>
+         </h1>
+         <div class="text-muted fst-italic mb-2">
+            <%= article.createdDate %>
+         </div>
+         <!-- <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a> -->
+         <div class="row g-3">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+               <button id="update" class="btn btn-light px-2 m-2" 
+                  onclick="location.href='/main/updateArticle/<%= article._id %>'" type="button">수정하기</button>
+               <button id="delete" class="btn btn-light px-2 m-2"
+                  onclick="location.href='/main/deleteArticle/<%= article._id %>'" type="button">삭제하기</button>
+            </div>
+         </div>
+      </header>
+
+      <!-- Preview image figure -->
+      <figure class="mb-4">
+         <% if(article.image) { %>
+            <img class="img-fluid rounded" src="<%= article.image %>" alt="..." />
+         <% } else { %>
+            <!-- <img class="img-fluid rounded" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" alt="..." /> -->
+         <% } %>
+      </figure>
+
+      <!-- Article content -->
+      <article class="mb-5">
+         <p class="fs-5 mb-4">
+            <%= article.content %>
+         </p>
+      </article>
+
+      <% function isThereComment(obj) {
+            if (obj.constructor === Object && Object.keys(obj).length === 0) { return false; }
+            else { return true; };
+         };
+         const Comments = JSON.parse(JSON.stringify(article.comments));
+         if (isThereComment(Comments)) {
+            Comments.forEach(function(comment) { %>
+
+               <div class="d-flex">
+                  <div class="flex-shrink-0">
+                     <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                  </div>
+                  <div class="ms-3">
+                     <div class="fw-bold"> <%= comment.username %> </div>
+                     <p> <%= comment.comment %> </p>
+
+                     <!-- child comment -->
+                     <!-- <div class="d-flex mt-4">
+                        <div class="flex-shrink-0">
+                           <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                        </div>
+                        <div class="ms-3">
+                           <div class="fw-bold">Commenter Name</div>
+                           And under those conditions, you cannot establish a capital-market evaluation of that
+                           enterprise. You can't get investors.
+                        </div>
+                     </div> -->
+                  </div>
+               </div>
+            <% }); 
+         }; %>
+
+      <div class="container py-md-2 my-3"></div>
+
+      <!-- Comment form  -->
+      <div class="card-body">
+
+         <form class="mb-4" method="POST" onsubmit="return saveComment(this);">
+            <input type="hidden" name="article_id" value="<%= article._id %>" />
+            <div class="form-group">
+               <input class="form-control" name="username" placeholder="이름" />
+            </div>
+            <div class="form-group">
+               <textarea class="form-control my-2" name="comment" rows="3" placeholder="의견을 작성해 주세요 !"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary p-2 my-2">저장하기</button>
+         </form>
+      </div>
+
+   </div>
+
+   <script>
+      function saveComment(form) {
+         console.log('function saveComment(form)에 진입 ~~');
+         $.ajax({
+            url: "/main/saveComment",
+            method: "POST",
+            data: {
+               article_id: form.article_id.value,
+               username: form.username.value,
+               comment: form.comment.value
+            },
+            success: function (response) {
+               // alert();
+               console/log('Comment saved successfully !');
+               // alert(response);
+               // response.redirect(`/main/showArticle/${article_id}`);
+            }
+         });
+         return false;
+      };
+   </script>
+
+   </body>
+
+   </html>

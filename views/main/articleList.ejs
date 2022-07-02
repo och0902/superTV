@@ -1,0 +1,86 @@
+<%- include('header') -%>
+
+   <div class="container py-md-2 my-2"></div>
+
+   <div class="container p-0">
+      <div class="title">
+         <h2>TV사업 성공희망</h2>
+         <p class="subtitle">Upload Texts to the <strong>Server</strong></p>
+      </div>
+      <div class="row g-3">
+         <div class="col-md-8"></div>
+         <div class="col-md-4 d-flex justify-content-center align-items-center">
+            <button id="create" class="btn btn-light px-2 m-2" onclick="location.href='/main/createArticle'"
+               type="button">새문서 작성하기</button>
+         </div>
+      </div>
+   </div>
+
+   <div class="container table-responsive-lg p-0 py-3">
+      <table class="caption-top table table-bordered table-hover">
+         <!-- <caption>List of Articles</caption> -->
+         <thead class="table-light">
+            <tr class="d-flex text-center">
+               <!-- <th scope="col" class="col-1">번호</th> -->
+               <th scope="col" class="col-2">제목</th>
+               <th scope="col" class="col-8">내용</th>
+               <th scope="col" class="col-2">날짜</th>
+               <!-- <th scope="col" class="col-1">조회</th> -->
+            </tr>
+         </thead>
+
+         <tbody>
+            <% articles.forEach(function(article) { %>
+               <tr class="d-flex">
+                  <td class="col-2 text-start" onclick="postRequest(title);">
+                     <a class="text-dark" href="/main/articles/<%= article._id %>">
+                        <%= article.title %>
+                     </a>
+                  </td>
+                  <td class="col-8 text-start">
+                     <%= article.content %>
+                  </td>
+                  <td class="col-2 text-center">
+                     <%= article.createdDate %>
+                  </td>
+               </tr>
+               <% }); %>
+         </tbody>
+
+         <tfoot class="table-light">
+            <tr class="d-flex">
+               <!-- <th scope="row" class="col-1 text-center">1</th> -->
+               <td class="col-2 text-start">Mark</td>
+               <td class="col-8 text-center">Otto</td>
+               <td class="col-2 text-center">@mdo</td>
+               <!-- <td class="col-1 text-center">@mdo</td> -->
+            </tr>
+         </tfoot>
+      </table>
+   </div>
+
+   <div class="container d-flex justify-content-center">
+      <nav aria-label="Page navigation">
+         <ul class="pagination">
+            <li class="page-item">
+               <a class="page-link text-dark" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">이전</span>
+               </a>
+            </li>
+            <li class="page-item"><a class="page-link text-dark" href="#">1</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
+            <li class="page-item">
+               <a class="page-link text-dark" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">다음</span>
+               </a>
+            </li>
+         </ul>
+      </nav>
+   </div>
+
+   </body>
+
+   </html>
