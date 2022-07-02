@@ -1,39 +1,62 @@
-const express = require('express');
-const app = express();
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-const session = require('express-session');
+var express = require('express');
+var app = express();
+var logger = require('morgan');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var passport = require('./config/passport.js');
+var flash = require('connect-flash');
+var util = require('./config/util.js');
+var dotenv = require('dotenv');
+dotenv.config();
+var createError = require('http-errors');
 
-const mongoose = require('mongoose');
-const createError = require('http-errors');
-
-const adminRouter = require('./routes/admin.js');
-const mainRouter = require('./routes/main.js');
+// DB setting
+mongoose.connect(process.env.MONGODB, 
+   { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true, useUnifiedTopology: true });
+var mongoDB = mongoose.connection;
+mongoDB.once('open', function () { console.log('MongoDB connenction establised ...'); });
+mongoDB.on('error', function(err){ console.log('MongoDB ERROR : ', err); });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// Other settings
 app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname+'/assets'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOverride('_method'));
+app.use(flash());
+app.use(session({secret:'supreTV-playground.com', resave:true, saveUninitialized:true}));
 
-app.use('/', adminRouter);
-app.use('/main', mainRouter);
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
-// app.use( session({ key: 'admin', secret: 'superTV-playground.com', resave: true, saveUninitialized: true }) );
+// Custom Middlewares
+app.use(function(req,res,next){
+   res.locals.isAuthenticated = req.isAuthenticated();
+   res.locals.currentUser = req.user;
+   res.locals.currentAdmin = req.admin;
+   next();
+});
 
-// mongoose setup
-mongoose.connect('mongodb://localhost:27017/supertv2108', { useNewUrlParser: true, useUnifiedTopology: true });
-const mongoDB = mongoose.connection;
-mongoDB.on("error", function (err) { console.log(err); });
-mongoDB.once("open", function () { console.log("MongoDB connenction establised ..."); });
+// Routes
+app.use('/', require('./routes/welcome.js'));
+app.use('/users', require('./routes/users.js'));
+app.use('/main', require('./routes/main.js'));
+
+app.use('/articles', util.getArticleQueryString, require('./routes/articles.js'));
+app.use('/comments', util.getArticleQueryString, require('./routes/comments.js'));
+
+app.use('/weTubes', util.getArticleQueryString, require('./routes/weTubes.js'));
+app.use('/wePhotos', util.getArticleQueryString, require('./routes/wePhotos.js'));
+
+app.use('/sayYos', util.getArticleQueryString, require('./routes/sayYos.js'));
+app.use('/sayYoComments', util.getArticleQueryString, require('./routes/sayYoComments.js'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) { next(createError(404)); });

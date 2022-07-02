@@ -1,0 +1,120 @@
+body {
+   /* font-family: 'Open Sans', sans-serif; */
+}
+.breadcrumb-item {
+   font-size: 0.8em !important;
+}
+.ellipsis{
+   display: block;
+   width: 100%;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis; 
+}
+
+.board-table {
+   table-layout: fixed;
+}
+
+.board-table .writer,
+.board-table .date {
+   width: 100px;
+}
+
+.board-table .title-container:hover .title-comments,
+.board-table .title-container:hover .title-text
+{
+   text-decoration: underline;
+}
+
+.text-underline-hover:hover {
+   text-decoration: underline;
+}
+
+.article-content,
+.comment-text {
+   white-space: pre-line;
+}
+
+.article-info{
+   font-size: 0.8em;
+}
+
+.user-form {
+   width: 400px;
+}
+
+.article-index-tool {
+   max-width: 500px;
+}
+.article-index-tool input[type='text']{
+   max-width: 130px;
+}
+
+.highlighted {
+   background-color: blue;
+}
+
+.comment-edit,
+.comment-reply,
+.comment-edit-enabled .comment-show {
+   display:none;
+}
+
+.comment-edit-enabled .comment-edit,
+.comment-reply-enabled .comment-reply {
+   display:inherit;
+}
+
+.welcome1 {
+   height: 37px;
+}
+.welcome2 {
+   height: 88px;
+}
+.welcome3 {
+   display: flex;
+   justify-content: center;
+}
+.welcome3 img {
+   height: 494px;
+   object-fit: scale-down;
+}
+.welcome4 {
+   display: flex;
+   justify-content: center;
+}
+.welcome4 img {
+   height: 120px;
+}
+
+@media (min-width: 540px) and (max-width: 960px) {
+   .welcome1 {
+      height: 30px;
+   }
+   .welcome2 {
+      height: 55px;
+   }
+   .welcome3 img {
+      height: 400px;
+
+   }
+   .welcome4 img {
+      height: 95px;
+   }
+}
+
+@media (max-width: 540px) {
+   .welcome1 {
+      height: 23px;
+   }
+   .welcome2 {
+      height: 35px;
+   }
+   .welcome3 img {
+      height: 270px;
+   }
+   .welcome4 img {
+      height: 70px;
+   }
+}

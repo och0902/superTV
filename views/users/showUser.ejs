@@ -1,0 +1,40 @@
+<%- include('../partials/head.ejs') -%>
+   
+   <div class="container mb-3">
+      <h3 class="contentBoxTop">iD : <%= user.id %></h3>
+      <form class="user-form" action="/users" method="post">
+         <fieldset disabled>
+            
+            <div class="form-group row">
+               <label for="name" class="col-sm-4 col-form-label">Name</label>
+               <div class="col-sm-8">
+               <input class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="name" class="col-sm-4 col-form-label">Co Email Id</label>
+               <div class="col-sm-8">
+               <input class="form-control" type="text" id="emailId" name="emailId" value="<%= user.emailId %>">
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="name" class="col-sm-4 col-form-label">Co Number</label>
+               <div class="col-sm-8">
+               <input class="form-control" type="text" id="coNumber" name="coNumber" value="<%= user.coNumber %>">
+               </div>
+            </div>
+         </fieldset>
+      </form>
+
+      <div>
+         <% if(isAuthenticated && currentUser.id == user.id){ %>
+            <a class="btn btn-light border text-underline-hover" href="/users">뒤로</a>
+            <form action="/users/<%= user.emailId %>?_method=delete" method="post" class="d-inline">
+               <a class="btn btn-light border text-underline-hover" href="javascript:void(0)" onclick="confirm('사용자를 삭제하나요 ?')?this.parentElement.submit():null;">삭제</a>
+            </form>
+         <% } %>
+      </div>
+
+   </div>
+</body>
+</html>

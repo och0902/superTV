@@ -1,0 +1,36 @@
+<div class="container">      
+   <nav class="navbar px-0 mx-0 navbar-expand-lg navbar-light">
+      <div class="container-fluid px-0 mx-0">
+
+         <a class="navbar-brand" href="/main">
+            <div><img height="20" src="/img/superTV_dark.png" alt="superTV"></div>
+            <div><img height="30" src="/img/playGround.png" alt="playGround"></div>
+         </a>
+
+         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09"
+            aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+
+         <div class="collapse navbar-collapse ms-5" id="navbarsExample09">
+            <ul class="navbar-nav me-auto">
+               <li class="nav-item mx-2">
+                  <a class="nav-link text-decoration-none text-dark" href="/articles"><span class="text-underline-hover">Article</span></a>
+               </li>
+               <li class="nav-item mx-2">
+                  <a class="nav-link text-decoration-none text-dark" href="/weTubes"><span class="text-underline-hover">WeTube</span></a>
+               </li>
+               <li class="nav-item mx-2">
+                  <a class="nav-link text-decoration-none text-dark" href="/wePhotos"><span class="text-underline-hover">WePhoto</span></a>
+               </li>
+               <li class="nav-item mx-2">
+                  <a class="nav-link text-decoration-none text-dark" href="/sayYos"><span class="text-underline-hover">SayYo!</span></a>
+               </li>
+            </ul>
+            <div class="text-end my-1">
+               <a href="/logout"><button type="button" class="btn btn-light border text-underline-hover"><%= currentUser.emailId %> : 로그아웃</button></a>
+            </div>
+         </div>
+      </div>
+   </nav>
+</div>

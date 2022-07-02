@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
-var Counter = require('./counterDB.js');
+var Counter = require('./sayYoCounterDB.js');
 
 // schema
-var articleSchema = mongoose.Schema({
+var sayYoSchema = mongoose.Schema({
    numId:{type:Number},
-   catagory:{type:String},
+   category:{type:String},
    title:{type:String, required:[true,'제목을 입력해 주세요 !']},
    content:{type:String, required:[true,'내용을 입력해 주세요 !']},
    writer:{type:mongoose.Schema.Types.ObjectId, ref:'user', required:true},
@@ -13,18 +13,18 @@ var articleSchema = mongoose.Schema({
    updatedAt:{type:Date},
 });
 
-articleSchema.pre('save', async function (next){
-   var article = this;
-   if(article.isNew){
-      counter = await Counter.findOne({name:'articles'}).exec();
-      if(!counter) counter = await Counter.create({name:'articles'});
+sayYoSchema.pre('save', async function (next){
+   var sayYo = this;
+   if(sayYo.isNew){
+      counter = await Counter.findOne({name:'sayYos'}).exec();
+      if(!counter) counter = await Counter.create({name:'sayYos'});
       counter.count++;
       counter.save();
-      article.numId = counter.count;
+      sayYo.numId = counter.count;
    }
    return next();
 });
 
 // model & export
-var Article = mongoose.model('article', articleSchema);
-module.exports = Article;
+var SayYo = mongoose.model('sayYo', sayYoSchema);
+module.exports = SayYo;

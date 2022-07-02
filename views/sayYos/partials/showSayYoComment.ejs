@@ -1,0 +1,71 @@
+<%/*
+   sayYo
+   SayYoComment
+   SayYoCommentForm
+   SayYoCommentError
+*/%>
+
+<div class="border-top">
+   <% if(sayYoComment.isDeleted){ %>
+      <div class="text-muted p-2"> -- 댓글이 삭제되었습니다 -- </div>
+   <% } else { %>
+      <div class="row pt-1 pb-1">
+         <div class="col-3 col-md-2 col-lg-1 pl-4"><%= sayYoComment.writer.emailId %></div>
+         <div id="comment-<%= sayYoComment._id %>" class="col-9 col-md-10 col-lg-11 <%= (sayYoCommentError._id == sayYoComment._id)?'comment-edit-enabled':'' %> <%= (sayYoCommentError.parentSayYoComment == sayYoComment._id)?'comment-reply-enabled':'' %>">
+            <div class="comment-show">
+               <div class="comment-text mb-3"><%= sayYoComment.text %></div>
+               <small class="d-block">
+                  등록일시: <span data-date-time="<%= sayYoComment.createdAt %>"></span>
+                  <% if(sayYoComment.updatedAt){ %>
+                  | 수정일시: <span data-date-time="<%= sayYoComment.updatedAt %>"></span>
+                  <% } %>
+                  | 
+                  <% if(isAuthenticated){ %>
+                     <a href="javascript:void(0)" onclick="$('.comment-reply-enabled').removeClass('comment-reply-enabled'); $('.comment-edit-enabled').removeClass('comment-edit-enabled'); $('#comment-<%= sayYoComment._id %>').addClass('comment-reply-enabled')" class="text-decoration-none text-dark"><span class="text-underline-hover">대댓글</span></a>
+                     <% if(sayYoComment.writer && currentUser.id == sayYoComment.writer.id){ %>
+                        |
+                        <a href="javascript:void(0)" onclick="$('.comment-reply-enabled').removeClass('comment-reply-enabled'); $('.comment-edit-enabled').removeClass('comment-edit-enabled'); $('#comment-<%= sayYoComment._id %>').addClass('comment-edit-enabled')" class="text-decoration-none text-dark"><span class="text-underline-hover">수정</span></a>
+                        |
+                        <form action="/sayYoComments/<%= sayYoComment._id %>?sayYoId=<%= sayYo._id %>&_method=delete<%= getArticleQueryString(true) %>" method="post" class="d-inline">
+                           <a href="javascript:void(0)" onclick="confirm('이 댓글을 지울까요 ?')?this.parentElement.submit():null;" class="text-decoration-none text-dark"><span class="text-underline-hover">삭제</span></a>
+                        </form>
+                     <% } %>
+                  <% } %>
+               </small>
+            </div>
+            <div class="comment-edit">
+               <%- include('./sayYoCommentForm', {
+                  actionUrl:'/sayYoComments/' + sayYoComment._id + '?sayYoId=' + sayYo._id + '&_method=put',
+                  sayYoComment: sayYoComment,
+                  sayYoCommentForm: sayYoCommentForm,
+                  sayYoCommentError: sayYoCommentError,
+                  parentSayYoComment: null,
+               }); %>
+            </div>
+            <div class="comment-reply">
+               <%- include('./sayYoCommentForm', {
+                  actionUrl:'/sayYoComments?sayYoId=' + sayYo._id,
+                  sayYoComment: {},
+                  sayYoCommentForm: sayYoCommentForm,
+                  sayYoCommentError: sayYoCommentError,
+                  parentSayYoComment: sayYoComment._id,
+               }); %>
+            </div>
+         </div>
+      </div>
+   <% } %>
+
+   <div class="ml-3">
+      <% if(sayYoComment.childSayYoComments){ %>
+         <% sayYoComment.childSayYoComments.forEach(function(childSayYoComment) { %>
+         <%- include('./showSayYoComment', {
+            sayYo: sayYo,
+            sayYoComment: childSayYoComment,
+            sayYoCommentForm: sayYoCommentForm,
+            sayYoCommentError: sayYoCommentError,
+         }); %>
+         <% }) %>
+      <% } %>
+   </div>
+
+</div>

@@ -4,7 +4,6 @@
 const app = require('../app.js');
 const debug = require('debug')('superTV-playground:server');
 const http = require('http');
-const { varants } = require('fs');
 
 // Get port from environment and store in Express.
 const port = normalizePort(process.env.PORT || '3000');

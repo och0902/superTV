@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+   <head>
+      <%- include('../partials/head') %>
+   </head>
+   <body>
+      <%- include('../partials/nav') %>
+      <div class="container mb-3">
+
+         <form action="/articles<%= getArticleQueryString() %>" method="post">
+
+            <div class="row">
+               <div class="col-md-8">
+                  <h4>Article</h4>
+                  <p>다양한 여러의견들이 제안되고 논의되는 <strong>자유롭고 건강한 공간</strong></pclass=>
+               </div>
+               <div class="col-md-4 d-flex justify-content-end align-items-center">
+                  <a href="/articles<%= getArticleQueryString() %>"><span class="btn btn-light border text-underline-hover me-2">뒤로</span></a>
+                  <span><button type="submit" class="btn btn-light border text-underline-hover">저장</button></span>
+               </div>
+            </div>
+
+            <div class="form-group d-flex mt-2">
+               <div class="col-3 d-flex align-items-center justify-content-lg-between">
+                  <select name="catagory" class="form-select me-2" aria-label="Default select example">
+                     <option selected>카테고리 선택</option>
+                     <option value="공유">공유</option>
+                     <option value="제안">제안</option>
+                     <option value="질문">질문</option>
+                  </select>
+               </div>
+
+               <div class="col-9">
+                  <input type="text" id="title" name="title" value="<%= article.title %>" placeholder="제 목" class="form-control <%= (errors.title)?'is-invalid':'' %>">
+                  <% if(errors.title){ %>
+                     <span class="invalid-feedback"><%= errors.title.message %></span>
+                  <% } %>
+               </div>
+            </div>
+
+            <div class="form-group my-2">
+               <textarea id="content" name="content" rows="10" placeholder="내용을 입력하여 주세요 ~ " class="form-control <%= (errors.body)?'is-invalid':'' %>"><%= article.content %></textarea>
+               <% if(errors.body){ %>
+                  <span class="invalid-feedback"><%= errors.body.message %></span>
+               <% } %>
+            </div>
+
+            <% if(errors.unhandled){ %>
+               <div class="invalid-feedback d-block">
+                  <%= errors.unhandled %>
+               </div>
+            <% } %>
+
+         </form>
+      </div>
+   </body>
+</html>
